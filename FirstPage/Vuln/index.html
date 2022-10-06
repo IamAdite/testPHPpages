@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Submit to DataBase page</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Submit message</h1>
+    <form action="submit-message.php" method="post">
+        <label for="name">Your Name: </label>
+        <input type="text" id="name" name="name">
+
+        <label for="msg">Your message: </label>
+        <textarea id="msg" name="msg"> </textarea>
+        <br>
+        <button>Send</button>  
+    </form> 
+
+    <h1>View message</h1>
+    <form action="view-message.php" method="post">
+        <label for="viewmsg">View message of: </label>
+        <input type="text" id="viewmsg" name="viewmsg">
+        <button>View</button>  
+    </form> 
+
+</body>
+</html>
+
