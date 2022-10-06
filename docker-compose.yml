@@ -1,0 +1,23 @@
+version: '3.8'
+
+volumes:
+    datafiles:
+   
+services:
+    mysql:
+        image: mysql:8.0.0
+        container_name: mysql8
+        volumes:
+          - datafiles:/var/lib/mysql
+        restart: always
+    
+    app:
+        container_name: php
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 8080:80
+            - 8083:443
+        depends_on:
+            - mysql
