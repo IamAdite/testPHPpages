@@ -1,23 +1,29 @@
-version: '3.8'
-
-volumes:
-    datafiles:
-   
+version: '3.7'
 services:
-    mysql:
-        image: mysql:8.0.0
-        container_name: mysql8
-        volumes:
-          - datafiles:/var/lib/mysql
-        restart: always
-    
-    app:
-        container_name: php
-        build:
-            context: .
-            dockerfile: Dockerfile
-        ports:
-            - 8080:80
-            - 8083:443
-        depends_on:
-            - mysql
+  web:
+    build:
+      context: ./phpLoginVuln
+      dockerfile: Dockerfile
+    container_name: php74
+    depends_on:
+      - db
+    volumes:
+      - ./phpLoginVuln:/var/www/html/
+    ports:
+      - 8000:80
+
+  db:
+    container_name: mysql8
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: testUser
+      MYSQL_PASSWORD: qwerty123
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - 6033:3306
+#    command: mysql -u root --password=root --database=mysql < .var/lib/mysql/testusers.sql
